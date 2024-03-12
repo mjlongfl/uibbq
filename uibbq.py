@@ -67,25 +67,25 @@ class iBBQ:
 
     async def _write(self, service, characteristic, message):
         if not self._connection.is_connected():
-            raise "Cannot write, device disconnected"
+            raise Exception("Cannot write, device disconnected")
         try:
             _service = await self._connection.service(service)
             _characteristic = await _service.characteristic(characteristic)
             await _characteristic.write(message)
             return _characteristic
-        except asyncio.TimeoutError:
-            raise "Timeout during write"
+        except asyncio.TimeoutError as te:
+            raise Exception("Timeout during write") from te
 
     async def _subscribe(self, service, characteristic):
         if not self._connection.is_connected():
-            raise "Cannot write, device disconnected"
+            raise Exception("Cannot write, device disconnected")
         try:
             _service = await self._connection.service(service)
             _characteristic = await _service.characteristic(characteristic)
             await _characteristic.subscribe()
             return _characteristic
-        except asyncio.TimeoutError:
-            raise "Timeout during subscribe"
+        except asyncio.TimeoutError as te:
+            raise Exception("Timeout during subscribe") from te
 
     async def connect(self):
         await self.find_ibbq()
