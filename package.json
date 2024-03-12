@@ -1,0 +1,9 @@
+{
+    "urls": [
+      ["uibbq.py", "github:mjlongfl/uibbq/uibbq.py"]
+    ],
+    "deps": [
+      ["aioble", "latest"]
+    ],
+    "version": "1.1"
+  }
