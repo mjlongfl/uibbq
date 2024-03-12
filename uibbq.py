@@ -66,7 +66,7 @@ class iBBQ:
         return False
 
     async def _write(self, service, characteristic, message):
-        if not self._connection.is_connected():
+        if None == self._connection or not self._connection.is_connected():
             raise Exception("Cannot write, device disconnected")
         try:
             _service = await self._connection.service(service)
@@ -77,7 +77,7 @@ class iBBQ:
             raise Exception("Timeout during write") from te
 
     async def _subscribe(self, service, characteristic):
-        if not self._connection.is_connected():
+        if None == self._connection or not self._connection.is_connected():
             raise Exception("Cannot write, device disconnected")
         try:
             _service = await self._connection.service(service)
@@ -159,7 +159,7 @@ class iBBQ:
             return None
 
     async def _read_data(self):
-        while self._connection.is_connected():
+        while None != self._connection and self._connection.is_connected():
             try:
                 data = await self._real_time_data.notified(1000)
                 if data:
@@ -178,4 +178,5 @@ class iBBQ:
             await asyncio.sleep(0.1)
 
     async def disconnect(self):
-        await self._connection.disconnect()
+        if None != self._connection:
+            await self._connection.disconnect()
