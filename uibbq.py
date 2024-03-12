@@ -35,7 +35,6 @@ class iBBQ:
         self._device = None
         self._connection = None
         self._real_time_data = None
-        self._data_handler = None
         self._settings_data = None
 
     async def set_display_to_celcius(self):
@@ -90,8 +89,7 @@ class iBBQ:
     async def connect(self):
         await self.find_ibbq()
         if not self._device:
-            print("iBBQ not found")
-            return
+            raise Exception("iBBQ not found")
 
         print("Connecting to", self._device)
         self._connection = await self._device.connect()
