@@ -1,6 +1,6 @@
 """Micropython iBBQ Interface"""
 
-__version__ = "1.0"
+__version__ = "1.1"
 
 from struct import unpack_from
 import uasyncio as asyncio
